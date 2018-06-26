@@ -19,6 +19,10 @@ app.get('/gallery', function(req, res){
   res.render('gallery', {gallery : gallery});
 });
 
+app.post('/gallery', function(req, res){
+  res.send('Gallery POST Route');
+});
+
 app.listen(3000, function(){
   console.log('The Photopia server has started!');
 });
