@@ -1,0 +1,23 @@
+{
+  "name": "photopia",
+  "version": "1.0.0",
+  "description": "A simple crud app to upload images.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darshancc23/photopia.git"
+  },
+  "author": "C C Darshan Thimmaiah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/darshancc23/photopia/issues"
+  },
+  "homepage": "https://github.com/darshancc23/photopia#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.3"
+  }
+}
