@@ -1,13 +1,28 @@
 <% include partials/header %>
 
-<h1>Upload new Image</h1>
+<div class="container" style="margin-top: 100px">
+  <div class="row">
+    <div class="col">
+      <h1 class="text-center">Upload new Image</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="style pt-3" style="width: 30%; margin: 0 auto;">   
+        <form action="/gallery" method="POST">
+          <div class="form-group">
+            <input class="form-control" type="text" name="name" placeholder="Image Title">
+          </div>
+          <div class="form-group">
+            <input class="form-control" type="text" name="image" placeholder="Image URL">
+          </div>
+          <button class="btn btn-dark btn-block">Submit</button>
+        </form>
+        <a href="/gallery">Back</a>
+      </div>
+    </div>
+  </div>
+  </div>
 
-<form action="/gallery" method="POST">
-  <input type="text" name="name" placeholder="Image Title">
-  <input type="text" name="image" placeholder="Image URL">
-  <button>Submit</button>
-</form>
-
-<a href="/gallery">Back</a>
 
 <% include partials/footer %>
