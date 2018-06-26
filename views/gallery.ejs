@@ -1,12 +1,25 @@
 <% include partials/header %>
 
-<h1>This is the Gallery Page</h1>
-<a href="/gallery/new">Upload new Image</a>
-<% gallery.forEach(function(el){ %>
-  <div>
-    <h4> <%= el.name %> </h4>
-    <img src= '<%= el.image %>' alt= '<%= el.name %>'>
+<header class="jumbotron">
+  <div class="container text-center">
+    <h1 class="display-3">Welcome to Photopia</h1>
+    <p class="pt-3">Submit your best photos</p>
+    <a class="btn btn-dark text-light" href="/gallery/new">Upload new Image</a>
   </div>
- <% }); %>
+</header>
+<div class="container">
+  <div class="row" style="display:flex; flex-wrap: wrap;">
+      <% gallery.forEach(function(el){ %>
+        <div class="col-md-3 col-sm-6">
+          <figure>
+            <img class="figure-img img-fluid rounded" src= '<%= el.image %>' alt= '<%= el.name %>'>
+            <figcaption class="figure-caption text-center"><h6><%= el.name %></h6></figcaption>
+          </figure>
+        </div>
+      <% }); %>
+  </div>
+  
+</div>
+
 
  <% include partials/footer %>

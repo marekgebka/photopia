@@ -9,8 +9,14 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 var gallery = [
   {name: 'Central', image: 'https://source.unsplash.com/random/500x500'},
-  {name: 'Maximize', image: 'https://source.unsplash.com/random/500x501'},
-  {name: 'Business-focused', image: 'https://source.unsplash.com/random/500x502'}
+  {name: 'Maximize', image: 'https://source.unsplash.com/random/500x701'},
+  {name: 'Business-focused', image: 'https://source.unsplash.com/random/500x302'},
+  {name: 'Central', image: 'https://source.unsplash.com/random/500x500'},
+  {name: 'Maximize', image: 'https://source.unsplash.com/random/500x1001'},
+  {name: 'Business-focused', image: 'https://source.unsplash.com/random/500x502'},
+  {name: 'Central', image: 'https://source.unsplash.com/random/500x500'},
+  {name: 'Maximize', image: 'https://source.unsplash.com/random/500x301'},
+  {name: 'Business-focused', image: 'https://source.unsplash.com/random/500x502'},
 ]
 
 
