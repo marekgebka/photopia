@@ -13,33 +13,19 @@ var photoSchema = new mongoose.Schema({
   name: String,
   image: String
 });
-
 var Photo = mongoose.model("Photo", photoSchema);
 
-Photo.create({
-  name: 'Maximize',
-  image: 'https://source.unsplash.com/random/500x501'
-}, function(err, photo){
-  if(err){
-    console.log(err);
-  } else {
-    console.log("Newly created photo");
-    console.log(photo);
-  }
-});
-
-
-var gallery = [
-  {name: 'Central', image: 'https://source.unsplash.com/random/500x500'},
-  {name: 'Maximize', image: 'https://source.unsplash.com/random/500x701'},
-  {name: 'Business-focused', image: 'https://source.unsplash.com/random/500x302'},
-  {name: 'Central', image: 'https://source.unsplash.com/random/500x500'},
-  {name: 'Maximize', image: 'https://source.unsplash.com/random/500x1001'},
-  {name: 'Business-focused', image: 'https://source.unsplash.com/random/500x502'},
-  {name: 'Central', image: 'https://source.unsplash.com/random/500x500'},
-  {name: 'Maximize', image: 'https://source.unsplash.com/random/500x301'},
-  {name: 'Business-focused', image: 'https://source.unsplash.com/random/500x502'},
-]
+// Photo.create({
+//   name: 'Maximize',
+//   image: 'https://source.unsplash.com/random/500x501'
+// }, function(err, photo){
+//   if(err){
+//     console.log(err);
+//   } else {
+//     console.log("Newly created photo");
+//     console.log(photo);
+//   }
+// });
 
 
 app.get('/', function(req, res){
@@ -47,7 +33,13 @@ app.get('/', function(req, res){
 });
 
 app.get('/gallery', function(req, res){
-  res.render('gallery', {gallery : gallery});
+  Photo.find({}, function(err, allPhotos){
+    if(err){
+      console.log(err);
+    } else {
+      res.render('gallery', {gallery : allPhotos});
+    }
+  });
 });
 
 app.post('/gallery', function(req, res){
@@ -57,9 +49,13 @@ app.post('/gallery', function(req, res){
         name: name,
         image: image
       };
-  
-  gallery.push(newImage);
-  res.redirect('/gallery');
+  Photo.create(newImage, function(err, newImage){
+    if(err){
+      console.log(err)
+    } else {
+      res.redirect('/gallery');
+    }
+  });
 });
 
 app.get('/gallery/new', function(req, res){
