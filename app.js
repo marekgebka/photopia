@@ -49,9 +49,11 @@ app.get('/gallery', function(req, res){
 app.post('/gallery', function(req, res){
   var name = req.body.name,
       image = req.body.image,
+      desc = req.body.description
       newImage = {
         name: name,
-        image: image
+        image: image,
+        description: desc
       };
   Photo.create(newImage, function(err, newImage){
     if(err){
