@@ -4,4 +4,10 @@
 <img src = "<%= photo.image %>">
 <p><%= photo.description %></p>
 
+<% photo.comments.forEach(function(el){ %>
+  <p>
+    <strong><%= el.author %></strong> - <%= el.text %>
+  </p>
+<% }); %>
+
 <% include partials/footer %>
