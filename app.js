@@ -1,8 +1,11 @@
 var express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
-    mongoose = require('mongoose');
-    Photo = require('./models/photo')
+    mongoose = require('mongoose'),
+    Photo = require('./models/photo'),
+    seedDB = require('./seeds')
+
+seedDB();
 
 mongoose.connect('mongodb://localhost:27017/photopia', {useNewUrlParser: true});
 app.set("view engine", "ejs");
