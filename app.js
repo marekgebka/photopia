@@ -3,6 +3,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
     Photo = require('./models/photo'),
+    Comment = require('./models/comment'),
     seedDB = require('./seeds')
 
 
@@ -22,7 +23,7 @@ app.get('/gallery', function(req, res){
     if(err){
       console.log(err);
     } else {
-      res.render('index', {gallery : allPhotos});
+      res.render('gallery/index', {gallery : allPhotos});
     }
   });
 });
@@ -48,7 +49,7 @@ app.post('/gallery', function(req, res){
 
 // New
 app.get('/gallery/new', function(req, res){
-  res.render('new');
+  res.render('gallery/new');
 });
 
 // Show
@@ -57,7 +58,40 @@ app.get('/gallery/:id', function(req, res){
     if(err){
       console.log(err);
     } else {
-      res.render('show', {photo: foundPhoto});
+      res.render('gallery/show', {photo: foundPhoto});
+    }
+  });
+});
+
+// ===========================================================
+// Comments Routes
+// ===========================================================
+
+app.get('/gallery/:id/comments/new', function(req, res){
+  Photo.findById(req.params.id, function(err, gallery){
+    if(err){
+      console.log(err);
+    } else {
+      res.render('comments/new', {gallery: gallery});
+    }
+  });
+});
+
+app.post('/gallery/:id/comments', function(req, res){
+  Photo.findById(req.params.id, function(err, gallery){
+    if(err){
+      console.log(err);
+      res.redirect('/gallery');
+    } else {
+      Comment.create(req.body.comment, function(err, comment){
+        if(err){
+          console.log(err);
+        } else {
+          gallery.comments.push(comment);
+          gallery.save();
+          res.redirect('/gallery/' + gallery._id);
+        }
+      });
     }
   });
 });
