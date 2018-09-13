@@ -134,6 +134,16 @@ app.post('/register', function(req, res){
   });
 });
 
+app.get('/login', function(req, res){
+  res.render('login');
+});
+
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/gallery',
+  failureRedirect: '/login'
+}) ,function(req, res){
+});
+
 app.listen(3001, function(){
   console.log('The Photopia server has started!');
 });
