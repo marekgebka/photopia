@@ -11,19 +11,6 @@ mongoose.connect('mongodb://localhost:27017/photopia', {useNewUrlParser: true});
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 
-// Photo.create({
-//   name: 'Granite Hill',
-//   image: 'https://source.unsplash.com/random/500x500',
-//   description: 'This is a huge granite hill, no bathrooms, no water, Beautiful Granite!!'
-// }, function(err, photo){
-//   if(err){
-//     console.log(err);
-//   } else {
-//     console.log("Newly created photo");
-//     console.log(photo);
-//   }
-// });
-
 
 app.get('/', function(req, res){
   res.render('landing');
@@ -66,7 +53,7 @@ app.get('/gallery/new', function(req, res){
 
 // Show
 app.get('/gallery/:id', function(req, res){
-  Photo.findById(req.params.id, function(err, foundPhoto){
+  Photo.findById(req.params.id).populate('comments').exec(function(err, foundPhoto){
     if(err){
       console.log(err);
     } else {
@@ -75,6 +62,6 @@ app.get('/gallery/:id', function(req, res){
   });
 });
 
-app.listen(3000, function(){
+app.listen(3001, function(){
   console.log('The Photopia server has started!');
 });
