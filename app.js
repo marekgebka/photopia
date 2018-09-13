@@ -84,7 +84,7 @@ app.get('/gallery/:id', function(req, res){
 // Comments Routes
 // ===========================================================
 
-app.get('/gallery/:id/comments/new', function(req, res){
+app.get('/gallery/:id/comments/new',isLoggedIn, function(req, res){
   Photo.findById(req.params.id, function(err, gallery){
     if(err){
       console.log(err);
@@ -94,7 +94,7 @@ app.get('/gallery/:id/comments/new', function(req, res){
   });
 });
 
-app.post('/gallery/:id/comments', function(req, res){
+app.post('/gallery/:id/comments',isLoggedIn, function(req, res){
   Photo.findById(req.params.id, function(err, gallery){
     if(err){
       console.log(err);
@@ -148,6 +148,13 @@ app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/gallery');
 });
+
+function isLoggedIn(req, res, next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+  res.redirect('/login');
+}
 
 app.listen(3001, function(){
   console.log('The Photopia server has started!');
