@@ -37,6 +37,28 @@ router.post('/',isLoggedIn, function(req, res){
   });
 });
 
+// Edit Comments
+router.get('/:comments_id/edit', function(req, res){
+  Comment.findById(req.params.comments_id, function(err, foundComment){
+    if(err){
+      res.redirect('back');
+    } else {
+      res.render('comments/edit', {gallery_id: req.params.id, comment: foundComment});
+    }
+  });
+});
+
+// Update Comment
+router.put('/:comments_id', function(req, res){
+  Comment.findByIdAndUpdate(req.params.comments_id, req.body.comment, function(err, updatedComment){
+    if(err){
+      res.redirect('back');
+    } else {
+      res.redirect('/gallery/' + req.params.id);
+    }
+  });
+});
+
 // Middleware
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){
