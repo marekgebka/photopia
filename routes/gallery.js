@@ -14,14 +14,19 @@ router.get('/', function(req, res){
 });
 
 // Create route
-router.post('/', function(req, res){
+router.post('/',isLoggedIn, function(req, res){
   var name = req.body.name,
       image = req.body.image,
-      desc = req.body.description
+      desc = req.body.description,
+      author = {
+        id: req.user._id,
+        username: req.user.username
+      }
       newImage = {
         name: name,
         image: image,
-        description: desc
+        description: desc,
+        author: author
       };
   Photo.create(newImage, function(err, newImage){
     if(err){
@@ -33,7 +38,7 @@ router.post('/', function(req, res){
 });
 
 // New route
-router.get('/new', function(req, res){
+router.get('/new',isLoggedIn, function(req, res){
   res.render('gallery/new');
 });
 
@@ -47,5 +52,13 @@ router.get('/:id', function(req, res){
     }
   });
 });
+
+// Middleware
+function isLoggedIn(req, res, next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+  res.redirect('/login');
+}
 
 module.exports = router;
