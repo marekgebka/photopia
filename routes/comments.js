@@ -59,6 +59,17 @@ router.put('/:comments_id', function(req, res){
   });
 });
 
+// Delete Comment
+router.delete('/:comments_id', function(req, res){
+  Comment.findByIdAndRemove(req.params.comments_id, function(err){
+    if(err){
+      res.redirect('back');
+    } else {
+      res.redirect('/gallery/' + req.params.id);
+    }
+  });
+});
+
 // Middleware
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){
