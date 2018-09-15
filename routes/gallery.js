@@ -54,18 +54,14 @@ router.get('/:id', function(req, res){
 });
 
 // Edit Route
-router.get('/:id/edit', function(req, res){
-  Photo.findById(req.params.id, function(err, foundPhoto){
-    if(err){
-      res.redirect('/gallery');
-    } else {
+router.get('/:id/edit',checkPhotoOwnership, function(req, res){
+    Photo.findById(req.params.id, function(err, foundPhoto){
       res.render('gallery/edit', {photo: foundPhoto});
-    }
-  });
+    });
 });
 
 // Update Route
-router.put('/:id', function(req, res){
+router.put('/:id',checkPhotoOwnership, function(req, res){
   Photo.findByIdAndUpdate(req.params.id, req.body.gallery, function(err, updatedPhoto){
     if(err){
       res.redirect('/gallery');
@@ -76,7 +72,7 @@ router.put('/:id', function(req, res){
 });
 
 // Destroy Route
-router.delete('/:id', function(req, res){
+router.delete('/:id',checkPhotoOwnership, function(req, res){
   Photo.findByIdAndRemove(req.params.id, function(err){
     if(err){
       res.redirect('/gallery');
@@ -92,6 +88,24 @@ function isLoggedIn(req, res, next){
     return next();
   }
   res.redirect('/login');
+}
+
+function checkPhotoOwnership(req, res, next){
+  if(req.isAuthenticated()){
+    Photo.findById(req.params.id, function(err, foundPhoto){
+      if(err){
+        res.redirect('back');
+      } else {
+        if(foundPhoto.author.id.equals(req.user._id)){
+          next();
+        } else {
+          res.redirect('back');
+        }
+      }
+    });
+  } else {
+    res.redirect('back');
+  }
 }
 
 module.exports = router;
