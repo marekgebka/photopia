@@ -75,6 +75,17 @@ router.put('/:id', function(req, res){
   });
 });
 
+// Destroy Route
+router.delete('/:id', function(req, res){
+  Photo.findByIdAndRemove(req.params.id, function(err){
+    if(err){
+      res.redirect('/gallery');
+    } else {
+      res.redirect('/gallery');
+    }
+  });
+});
+
 // Middleware
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){

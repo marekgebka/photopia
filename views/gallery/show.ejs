@@ -20,6 +20,9 @@
               <p><em>Submitted By <%= photo.author.username %></em></p>
             </p>
             <a class="btn btn-warning" href="/gallery/<%= photo._id %>/edit">Edit</a>
+            <form id="delete-form" action="/gallery/<%= photo._id %>?_method=DELETE" method="POST">
+              <button class="btn btn-danger">Delete</button>
+            </form>
           </div>
       </div>
       <div class="card card-body bg-light mt-5">
