@@ -6,6 +6,7 @@ var express = require('express'),
     passport = require('passport'),
     LocalStrategy = require('passport-local'),
     methodOverride = require('method-override'),
+    compression = require('compression'),
     Photo = require('./models/photo'),
     Comment = require('./models/comment'),
     User = require('./models/user'),
@@ -23,7 +24,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
 app.use(methodOverride('_method'));
 app.use(flash());
-// seedDB(); Seed the database
+app.use(compression());
 
 // Passport Configuration
 app.use(require('express-session')({
