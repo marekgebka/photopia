@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Photo = require('../models/photo');
+var middleware = require('../middleware');
 
 // Index route
 router.get('/', function(req, res){
@@ -14,7 +15,7 @@ router.get('/', function(req, res){
 });
 
 // Create route
-router.post('/',isLoggedIn, function(req, res){
+router.post('/',middleware.isLoggedIn, function(req, res){
   var name = req.body.name,
       image = req.body.image,
       desc = req.body.description,
@@ -38,7 +39,7 @@ router.post('/',isLoggedIn, function(req, res){
 });
 
 // New route
-router.get('/new',isLoggedIn, function(req, res){
+router.get('/new',middleware.isLoggedIn, function(req, res){
   res.render('gallery/new');
 });
 
@@ -54,14 +55,14 @@ router.get('/:id', function(req, res){
 });
 
 // Edit Route
-router.get('/:id/edit',checkPhotoOwnership, function(req, res){
+router.get('/:id/edit',middleware.checkPhotoOwnership, function(req, res){
     Photo.findById(req.params.id, function(err, foundPhoto){
       res.render('gallery/edit', {photo: foundPhoto});
     });
 });
 
 // Update Route
-router.put('/:id',checkPhotoOwnership, function(req, res){
+router.put('/:id',middleware.checkPhotoOwnership, function(req, res){
   Photo.findByIdAndUpdate(req.params.id, req.body.gallery, function(err, updatedPhoto){
     if(err){
       res.redirect('/gallery');
@@ -72,7 +73,7 @@ router.put('/:id',checkPhotoOwnership, function(req, res){
 });
 
 // Destroy Route
-router.delete('/:id',checkPhotoOwnership, function(req, res){
+router.delete('/:id',middleware.checkPhotoOwnership, function(req, res){
   Photo.findByIdAndRemove(req.params.id, function(err){
     if(err){
       res.redirect('/gallery');
@@ -82,30 +83,5 @@ router.delete('/:id',checkPhotoOwnership, function(req, res){
   });
 });
 
-// Middleware
-function isLoggedIn(req, res, next){
-  if(req.isAuthenticated()){
-    return next();
-  }
-  res.redirect('/login');
-}
-
-function checkPhotoOwnership(req, res, next){
-  if(req.isAuthenticated()){
-    Photo.findById(req.params.id, function(err, foundPhoto){
-      if(err){
-        res.redirect('back');
-      } else {
-        if(foundPhoto.author.id.equals(req.user._id)){
-          next();
-        } else {
-          res.redirect('back');
-        }
-      }
-    });
-  } else {
-    res.redirect('back');
-  }
-}
 
 module.exports = router;

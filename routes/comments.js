@@ -2,9 +2,10 @@ var express = require('express');
 var router = express.Router({mergeParams: true});
 var Photo = require('../models/photo');
 var Comment = require('../models/comment');
+var middleware = require('../middleware');
 
 // Comments new
-router.get('/new',isLoggedIn, function(req, res){
+router.get('/new',middleware.isLoggedIn, function(req, res){
   Photo.findById(req.params.id, function(err, gallery){
     if(err){
       console.log(err);
@@ -15,7 +16,7 @@ router.get('/new',isLoggedIn, function(req, res){
 });
 
 // Coments create
-router.post('/',isLoggedIn, function(req, res){
+router.post('/',middleware.isLoggedIn, function(req, res){
   Photo.findById(req.params.id, function(err, gallery){
     if(err){
       console.log(err);
@@ -38,7 +39,7 @@ router.post('/',isLoggedIn, function(req, res){
 });
 
 // Edit Comments
-router.get('/:comments_id/edit',checkCommentOwnership, function(req, res){
+router.get('/:comments_id/edit',middleware.checkCommentOwnership, function(req, res){
   Comment.findById(req.params.comments_id, function(err, foundComment){
     if(err){
       res.redirect('back');
@@ -49,7 +50,7 @@ router.get('/:comments_id/edit',checkCommentOwnership, function(req, res){
 });
 
 // Update Comment
-router.put('/:comments_id',checkCommentOwnership, function(req, res){
+router.put('/:comments_id',middleware.checkCommentOwnership, function(req, res){
   Comment.findByIdAndUpdate(req.params.comments_id, req.body.comment, function(err, updatedComment){
     if(err){
       res.redirect('back');
@@ -60,7 +61,7 @@ router.put('/:comments_id',checkCommentOwnership, function(req, res){
 });
 
 // Delete Comment
-router.delete('/:comments_id',checkCommentOwnership, function(req, res){
+router.delete('/:comments_id',middleware.checkCommentOwnership, function(req, res){
   Comment.findByIdAndRemove(req.params.comments_id, function(err){
     if(err){
       res.redirect('back');
@@ -70,30 +71,5 @@ router.delete('/:comments_id',checkCommentOwnership, function(req, res){
   });
 });
 
-// Middleware
-function isLoggedIn(req, res, next){
-  if(req.isAuthenticated()){
-    return next();
-  }
-  res.redirect('/login');
-}
-
-function checkCommentOwnership(req, res, next){
-  if(req.isAuthenticated()){
-    Comment.findById(req.params.comments_id, function(err, foundComment){
-      if(err){
-        res.redirect('back');
-      } else {
-        if(foundComment.author.id.equals(req.user._id)){
-          next();
-        } else {
-          res.redirect('back');
-        }
-      }
-    });
-  } else {
-    res.redirect('back');
-  }
-}
 
 module.exports = router;
