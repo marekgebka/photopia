@@ -19,7 +19,7 @@ mongoose.connect('mongodb://localhost:27017/photopia', {useNewUrlParser: true});
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
-seedDB();
+// seedDB(); Seed the database
 
 // Passport Configuration
 app.use(require('express-session')({
@@ -43,6 +43,6 @@ app.use('/', indexRoutes);
 app.use('/gallery/:id/comments',commentRoutes);
 app.use('/gallery', galleryRoutes);
 
-app.listen(3001, function(){
+app.listen(3000, function(){
   console.log('The Photopia server has started!');
 });

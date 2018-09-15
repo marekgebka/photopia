@@ -17,6 +17,7 @@
               <h6 class="float-right">$9.00/night</h6>
               <h4><a href="#"><%= photo.name %></a></h4>
               <p><%= photo.description %></p>
+              <p><em>Submitted By <%= photo.author.username %></em></p>
             </p>
           </div>
       </div>
@@ -28,7 +29,7 @@
           <% photo.comments.forEach(function(el){ %>
             <div class="row">
               <div class="col-md-12">
-                <strong><%= el.author %></strong>
+                <strong><%= el.author.username %></strong>
                 <span class="float-right">10 days ago</span>
                 <p>
                     <%= el.text %>
