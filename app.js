@@ -9,8 +9,7 @@ var express = require('express'),
     compression = require('compression'),
     Photo = require('./models/photo'),
     Comment = require('./models/comment'),
-    User = require('./models/user'),
-    seedDB = require('./seeds');
+    User = require('./models/user')
 
 // Requiring express router routes
 var commentRoutes = require('./routes/comments'),
