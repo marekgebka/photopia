@@ -4,6 +4,9 @@ Photopia is a Web App built in the **MEN** Stack (Mongo, Express and Node) built
 media app around the upload of Images. Users can create an account using very little information and are then able to upload new
 photos that they wish to share or comment on the ones already uploaded by others.
 
+## Demo
+[Click here for a Live Demo :rocket:](http://nodejs-photopia.herokuapp.com/)
+
 ## Screenshots
 ![Landing Page](./readme-resources/landing.png)
 ![Gallery Index Page](./readme-resources/index.png)
@@ -21,9 +24,6 @@ The following technologies have been used in the making of the Application
 - [EJS](https://ejs.co)
 - [Body Parser](https://www.npmjs.com/package/body-parser)
 - [Flash Messaging](https://github.com/jaredhanson/connect-flash)
-
-## Demo
-[Click here for a Live Demo :rocket:](http://nodejs-photopia.herokuapp.com/)
 
 ## Setup Instructions
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
