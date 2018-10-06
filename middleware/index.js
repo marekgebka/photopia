@@ -1,8 +1,9 @@
-var Photo = require('../models/photo');
-var Comment = require('../models/comment');
+const Photo = require('../models/photo');
+const Comment = require('../models/comment');
 // All the middleware goes here
-var middlewareObj = {};
+let middlewareObj = {};
 
+//Ensures only the original Uploader of the Photo can change/delete it
 middlewareObj.checkPhotoOwnership = function(req, res, next){
   if(req.isAuthenticated()){
     Photo.findById(req.params.id, function(err, foundPhoto){
@@ -24,6 +25,7 @@ middlewareObj.checkPhotoOwnership = function(req, res, next){
   }
 };
 
+//Ensures only the Owner of the Comment has the right to modify/delete it
 middlewareObj.checkCommentOwnership = function(req, res, next){
   if(req.isAuthenticated()){
     Comment.findById(req.params.comments_id, function(err, foundComment){
@@ -44,12 +46,13 @@ middlewareObj.checkCommentOwnership = function(req, res, next){
   }
 };
 
+//Prevents Unauthorized Posting/Commenting in the App
 middlewareObj.isLoggedIn = function(req, res, next){
   if(req.isAuthenticated()){
     return next();
   }
-  req.flash('error', 'You need to logged in to do that!');
+  req.flash('error', 'You need to be logged in to do that!');
   res.redirect('/login');
-}
+};
 
-module.exports = middlewareObj
+module.exports = middlewareObj;

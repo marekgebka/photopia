@@ -19,11 +19,19 @@ var commentRoutes = require('./routes/comments'),
 
 // mongoose.connect('mongodb://localhost:27017/photopia', {useNewUrlParser: true});
 mongoose.connect('mongodb://darshan:123456789gg@ds155352.mlab.com:55352/photopia', {useNewUrlParser: true});
+
+//Sets View Engine and Parser so that EJS files can be parsed to form HTML
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
+
+//Serves the Public Directory for images/stylesheets
 app.use(express.static(__dirname + '/public'));
+
 app.use(methodOverride('_method'));
+
+//Uses flash for displaying messages to the user
 app.use(flash());
+
 app.use(compression());
 
 // Passport Configuration
