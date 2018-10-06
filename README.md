@@ -1,8 +1,8 @@
 # Photopia
 
-Photopia is a Web App built in the **MEN** Stack (Mongo, Express and Node) built by @darshancc23. It involves building a simple
-media app around the upload of Images. Users can create an account using very little information and are then able to upload new
-photos that they wish to share or comment on the ones already uploaded by others.
+Photopia is a Web App built in the **MEN** Stack (Mongo, Express and Node) built by [@darshancc23](https://github.com/darshancc23).
+It involves building a simple media app around the upload of Images. Users can create an account using very little information
+and are then able to upload new photos that they wish to share or comment on the ones already uploaded by others.
 
 ## Demo
 [Click here for a Live Demo :rocket:](http://nodejs-photopia.herokuapp.com/)
